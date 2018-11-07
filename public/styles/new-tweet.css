@@ -1,0 +1,28 @@
+.new-tweet {
+    background-color: rgb(236, 236, 236);
+    width: 400px;
+    border: solid 0.5px;
+    margin: 20px auto;
+    /* Moves the container down from the header */
+    padding: 10px;
+    /* Creates padding inside of the container */
+}
+
+.new-tweet h2 {
+   margin-top: 10px;
+   /* Moves the "Compose Tweet" text down from the top */
+   margin-bottom: 2px;
+   /* Removes space between "Compose Tweet" and the solid line */
+}
+
+.new-tweet .textarea {
+    /* display: inline-block; */
+    padding-left: 10px;
+    padding-top: 10px;
+    width: 100%;
+}
+
+.new-tweet .counter {
+    float: right;
+    background-color: rgb(236, 236, 236);
+}
