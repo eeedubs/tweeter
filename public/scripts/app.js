@@ -16,58 +16,58 @@ function createTweetElement (tweet){
     return $tweet;
 }
 
-const data = [
-    // data[0] level
-    {
-    // data[0].tweet level (3 tweets in data)
-    // first tweet
-        "user": {
-            "name": "Newton",
-            "avatars": {
-                "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-                "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-                "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-            },
-            "handle": "@SirIsaac"
-        },
-        "content": {
-            "text": "If I have seen further it is by standing on the shoulders of giants"
-        },
-        "created_at": 1461116232227
-    },
-    {
-    // second tweet
-        "user": {
-            "name": "Descartes",
-            "avatars": {
-                "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-                "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-                "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-            },
-            "handle": "@rd" 
-        },
-        "content": {
-            "text": "Je pense , donc je suis"
-        },
-        "created_at": 1461113959088
-    },
-    {
-    // third tweet        
-        "user": {
-            "name": "Johann von Goethe",
-            "avatars": {
-                "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-                "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-                "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-            },
-            "handle": "@johann49"
-        },
-        "content": {
-            "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-        },
-        "created_at": 1461113796368
-    }
-  ];
+// const data = [
+//     // data[0] level
+//     {
+//     // data[0].tweet level (3 tweets in data)
+//     // first tweet
+//         "user": {
+//             "name": "Newton",
+//             "avatars": {
+//                 "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
+//                 "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
+//                 "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
+//             },
+//             "handle": "@SirIsaac"
+//         },
+//         "content": {
+//             "text": "If I have seen further it is by standing on the shoulders of giants"
+//         },
+//         "created_at": 1461116232227
+//     },
+//     {
+//     // second tweet
+//         "user": {
+//             "name": "Descartes",
+//             "avatars": {
+//                 "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
+//                 "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
+//                 "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
+//             },
+//             "handle": "@rd" 
+//         },
+//         "content": {
+//             "text": "Je pense , donc je suis"
+//         },
+//         "created_at": 1461113959088
+//     },
+//     {
+//     // third tweet        
+//         "user": {
+//             "name": "Johann von Goethe",
+//             "avatars": {
+//                 "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
+//                 "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
+//                 "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
+//             },
+//             "handle": "@johann49"
+//         },
+//         "content": {
+//             "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
+//         },
+//         "created_at": 1461113796368
+//     }
+//   ];
 
 function unixDate(digits){
     var dateTime = new Date(digits);
@@ -75,12 +75,56 @@ function unixDate(digits){
 }
 
 $(document).ready(function() {
+
     function renderTweets(tweetDataArray){
         // render tweets for an array of tweet data
         tweetDataArray.forEach(function(item) {
             var $tweet = createTweetElement(item);
+            console.log("Tweet item: ", $tweet);
             $(".all-tweets").append($tweet);
         });
     }
-    renderTweets(data);
+    // function to handle the rendering of tweets into DOM structure (tree)
+
+    // function loadTweets (){
+    //     $.get("/tweets")
+    //     // this is getting the tweets from tweets.js through index.html
+    //         .done(tweets => {
+    //             console.log("Got tweets! Rendering...");
+    //             renderTweets(tweets);
+    //         })
+    //         // .fail(function() {
+    //         //     alert("Error");
+    //         // })
+    //         .fail(() => {
+    //             alert("Error");
+    //         });
+    // }
+    // renders the tweets  
+
+    $('form').on('submit', function(e) {
+        // when a submit event is called on "form", perform a function with argument "e" (for each event occurrence)
+        e.preventDefault();
+        const formContent = $(this).serialize();
+        // serialize creates key:value pairs with the data entered (in this case, text:<tweet message>
+        console.log('formContent', formContent);
+
+        $.ajax({
+            // sending the data to the server (asychronously)
+            method: 'POST',
+            url: '/tweets',
+            data: formContent
+        }).then(data => {
+            console.log('omg sucess!', data);
+            loadTweets();
+            // success case
+        },
+            (err) => {
+                throw err;
+                // error case
+            }
+        )
+        // response after the data has been sent
+    });
 })
+
