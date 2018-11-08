@@ -164,7 +164,7 @@ $(document).ready(function() {
                 // after the data is sent, load the tweets, clear the error (if 
                 // ... there is one), then clear the text area.
                 loadTweets();
-                $(".new-tweet .error-container").hide();
+                $(".new-tweet .error-container").slideUp();
                 $(".container .new-tweet .textarea").text("");
             },
             (err) => {
