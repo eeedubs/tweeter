@@ -83,7 +83,7 @@ $(document).ready(function() {
             // .all-tweets section in index.html
             var $tweet = createTweetElement(item);
             // console.log("Tweet item: ", $tweet);
-            $(".all-tweets").append($tweet);
+            $(".all-tweets").prepend($tweet);
         });
     }
     // function to handle the rendering of tweets into DOM structure (tree)
