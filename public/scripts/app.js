@@ -102,6 +102,29 @@ $(document).ready(function() {
             });
     }
 
+    // Handles the toggling of the "Compose Tweet" field by clicking the 
+    // ... "Compose" button. If the error field is visible, it will also 
+    // slide up. When the compose button is clicked again to reveal the new-tweet
+    // text area, it will autoselect it. 
+    $(function toggleCompose() {
+        var $navButton = $("#nav-bar .compose-button");
+        $navButton.on("click", function() {
+            $(".new-tweet .error-container").slideUp("slow");
+            $(".new-tweet").slideToggle("slow");
+            if ($(".new-tweet").is(":visible")){
+                $(".container .new-tweet .textarea").focus();
+            }
+        });
+    });
+
+    // Handles the close error button: toggles the error field when clicked.
+    $(function closeError() {
+        var $errorButton =  $(".new-tweet .error-container .error button");
+        $errorButton.on("click", function() {
+            $(".new-tweet .error-container").slideToggle();
+        });
+    });
+
     $('form').on('submit', function(event) {
         // when a submit event is called on "form", perform a function with argument "e" (for each event occurrence)
         event.preventDefault();
@@ -112,10 +135,14 @@ $(document).ready(function() {
         console.log('formContent', formLength);
         function validateForm(){
             if (formLength >= 140){
-                alert("You have exceeded the maximum number of characters.");
+                // Display the error field and add error text 
+                $(".new-tweet .error-container").show();
+                $(".new-tweet .error-container .error p").text("Your tweet exceeds the maximum number of characters permitted.");
                 return false;             
             } else if (formLength == 0){
-                alert("Your tweet is empty.");
+                // Display the error field and add error text
+                $(".new-tweet .error-container").show();
+                $(".new-tweet .error-container .error p").text("Your tweet is empty.");
                 return false;
             } else {
                 return true;
@@ -134,14 +161,15 @@ $(document).ready(function() {
                     $("form")[0].reset();
                 }
             }).then(data => {
-                // after the data is sent, load the tweets.
+                // after the data is sent, load the tweets, clear the error (if 
+                // ... there is one), then clear the text area.
                 loadTweets();
-                $("textarea").text("");
+                $(".new-tweet .error-container").hide();
+                $(".container .new-tweet .textarea").text("");
             },
             (err) => {
                 throw err;
                 })
             }
-        // response after the data has been sent
     });
 })
