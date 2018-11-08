@@ -79,52 +79,69 @@ $(document).ready(function() {
     function renderTweets(tweetDataArray){
         // render tweets for an array of tweet data
         tweetDataArray.forEach(function(item) {
+            // for each tweet in the array of tweet data, render it an append it to the 
+            // .all-tweets section in index.html
             var $tweet = createTweetElement(item);
-            console.log("Tweet item: ", $tweet);
+            // console.log("Tweet item: ", $tweet);
             $(".all-tweets").append($tweet);
         });
     }
     // function to handle the rendering of tweets into DOM structure (tree)
 
-    // function loadTweets (){
-    //     $.get("/tweets")
-    //     // this is getting the tweets from tweets.js through index.html
-    //         .done(tweets => {
-    //             console.log("Got tweets! Rendering...");
-    //             renderTweets(tweets);
-    //         })
-    //         // .fail(function() {
-    //         //     alert("Error");
-    //         // })
-    //         .fail(() => {
-    //             alert("Error");
-    //         });
-    // }
-    // renders the tweets  
+    function loadTweets (){
+        $.get("/tweets")
+        // this is getting the tweets from tweets.js through index.html
+            .done(tweets => {
+                // once the tweets have been received, render them
+                console.log("Got tweets! Rendering...");
+                renderTweets(tweets);
+            })
+            .fail(() => {
+                // if the tweets cannot be found, return an error
+                alert("Error");
+            });
+    }
 
-    $('form').on('submit', function(e) {
+    $('form').on('submit', function(event) {
         // when a submit event is called on "form", perform a function with argument "e" (for each event occurrence)
-        e.preventDefault();
+        event.preventDefault();
+        // prevent the default, which is to reload the page
         const formContent = $(this).serialize();
-        // serialize creates key:value pairs with the data entered (in this case, text:<tweet message>
-        console.log('formContent', formContent);
-
-        $.ajax({
-            // sending the data to the server (asychronously)
-            method: 'POST',
-            url: '/tweets',
-            data: formContent
-        }).then(data => {
-            console.log('omg sucess!', data);
-            loadTweets();
-            // success case
-        },
+        const formLength = $("textarea").val().length;
+        // serialize creates key:value pairs with the data entered ( in this case, key:value = text:<tweet message> )
+        console.log('formContent', formLength);
+        function validateForm(){
+            if (formLength >= 140){
+                alert("You have exceeded the maximum number of characters.");
+                return false;             
+            } else if (formLength == 0){
+                alert("Your tweet is empty.");
+                return false;
+            } else {
+                return true;
+            }
+        }
+        if (validateForm() === false){
+            event.stopPropagation();
+        } else {
+            // if successful, continue
+            $.ajax({
+                // sending the data to the server (asychronously)
+                method: 'POST',
+                url: '/tweets',
+                data: formContent,
+                success: function(data){
+                    $("form")[0].reset();
+                }
+            }).then(data => {
+                // after the data is sent, load the tweets.
+                loadTweets();
+                $("textarea").text("");
+            },
             (err) => {
                 throw err;
-                // error case
+                })
             }
-        )
         // response after the data has been sent
     });
 })
-
