@@ -38,18 +38,15 @@ MongoClient.connect(MongoURL, (err, db) => {
 
   DataHelpers.getTweets((err, tweets) => {
     if (err) throw err;
-    console.log("Logging each tweet:");
+    // console.log("Reading each tweet:");
     for (let tweet of tweets){
-      console.log("IN CODE:  index.js/DataHelpers.getTweets/for(let tweet of tweets): ", tweet);
       DataHelpers.saveTweet(tweet, () => {
-        console.log("Saving tweet....")
         DataHelpers.getTweets((err, tweets) => {
           console.log("Saving the following tweet to the database: ", tweets);
         });
-      })
+      });
     };
   });
-  // db.close();
 });
 
 app.listen(PORT, () => {

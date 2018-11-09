@@ -34,37 +34,26 @@
 
     <!-- Page-specific (main) content here -->
   <main class="container">
-      <section class="new-tweet">
-        <h2 class="compose-tweet">Compose Tweet</h2>
-        <hr>
-        <form action="/tweets/" method="POST">
-          <textarea class="textarea" name="text" placeholder="What are you humming about?"></textarea>
-          <input class="tweet-button" type="submit" value="Tweet">
-          <span class="counter">140</span>
-        </form>
-        <div class="error-container">
-          <div class="error">
-            <h2>Error!</h2>
-            <p>Sample Text To Be Replaced</p>
-            <button>Close</button>
+      <section class="new-tweet-container">
+        <div class="new-tweet">
+          <h2 class="compose-tweet">Compose Tweet</h2>
+          <hr>
+          <form action="/tweets/" method="POST">
+            <textarea class="textarea" name="text" placeholder="What are you humming about?"></textarea>
+            <input class="tweet-button" type="submit" value="Tweet">
+            <span class="counter">140</span>
+          </form>
+          <div class="error-container">
+            <div class="error">
+              <h2>Error!</h2>
+              <p>Sample Text To Be Replaced</p>
+              <button>Close</button>
+            </div>
           </div>
         </div>
       </section>
      
     <section class="all-tweets">
-
-      <!-- <article class="tweet">
-        <header>
-          <img class="avatar" src="/images/emoji.png">
-          <h2>Bill Fields</h2>
-          <p class="handle">@MrFields</p>
-        </header>
-        <p class="content">Little tweet here</p>
-        <footer>
-          <p class="date-posted">10 days ago</p>
-        </footer>
-      </article> -->
-
     </section>
   
   </main>
