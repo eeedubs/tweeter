@@ -1,4 +1,5 @@
 "use strict";
+// Helps create a random user's identification
 
 const Chance = require("chance");
 const chance = new Chance();

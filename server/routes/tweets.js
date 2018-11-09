@@ -17,12 +17,12 @@ module.exports = function(DataHelpers) {
     });
   });
 
+  // if the text field in the tweet box is empty, return the error
   tweetsRoutes.post("/", function(req, res) {
     if (!req.body.text) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
     }
-
     const user = req.body.user ? req.body.user : userHelper.generateRandomUser();
     const tweet = {
       user: user,
