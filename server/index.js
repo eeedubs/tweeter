@@ -38,7 +38,6 @@ MongoClient.connect(MongoURL, (err, db) => {
 
   DataHelpers.getTweets((err, tweets) => {
     if (err) throw err;
-    // console.log("Reading each tweet:");
     for (let tweet of tweets){
       DataHelpers.saveTweet(tweet, () => {
         DataHelpers.getTweets((err, tweets) => {

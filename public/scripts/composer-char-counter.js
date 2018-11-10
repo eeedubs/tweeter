@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // --- our code goes here ---
-    var textArea = document.querySelector(".new-tweet .textarea");
+    var textArea = document.querySelector(".new-tweet-container .new-tweet .textarea");
 
     textArea.addEventListener("keyup", function (event){
         var charactersLeft = 140 - this.textLength;
@@ -10,6 +10,7 @@ $(document).ready(function() {
             $(this).siblings(".counter").css("color", "red");
         }
     })
+
 });
 
     

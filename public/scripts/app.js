@@ -127,6 +127,7 @@ $(document).ready(function() {
                 loadTweets();
                 $(".new-tweet .error-container").slideUp();
                 $(".new-tweet .textarea").text("");
+                $(".counter").text("140");
             },
             (err) => {
                 throw err;
