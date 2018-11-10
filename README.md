@@ -1,8 +1,26 @@
 # Tweeter Project
 
-Tweeter is a simple, single-page Twitter clone.
+Tweeter is a simple, single-page Twitter clone built with HTML, CSS, JS, jQuery and AJAX on the front-end, and Node, Express and MongoDB on the back-end. 
 
-This repository is the starter code for the project: Students will fork and clone this repository, then build upon it to practice their HTML, CSS, JS, jQuery and AJAX front-end skills, and their Node, Express and MongoDB back-end skills.
+## Final Project
+
+!["Screenshot of the landing page for Tweeter: Shows the navigation bar, an empty page without tweets, and a compose button in the top right corner."](https://github.com/eeedubs/tweeter/blob/master/docs/landing-page.png)
+!["Screenshot of a Tweeter page with the error message for too many characters."](https://github.com/eeedubs/tweeter/blob/master/docs/error-message.png)
+!["Screenshot of the Tweeter landing page with the "compose tweet" box in view."](https://github.com/eeedubs/tweeter/blob/master/docs/compose-page.png)
+!["Screenshot of a sample feed within Tweeter. Shows the user's name, handle, comment, and avatar, and shows how long ago they tweeted. For users that are selected (in the cursor's focus), the tweet also shows the social buttons 'like', 'repost', and 'flag'."](https://github.com/eeedubs/tweeter/blob/master/docs/sample-tweet.png)
+
+## Dependencies
+
+- body-parser
+- chance
+- express
+- md5
+- MongoDB
+- Node.js
+
+## Dev Dependencies
+
+- nodemon
 
 ## Getting Started
 
@@ -10,8 +28,3 @@ This repository is the starter code for the project: Students will fork and clon
 2. Install dependencies using the `npm install` command.
 3. Start the web server using the `npm run local` command. The app will be served at <http://localhost:8080/>.
 4. Go to <http://localhost:8080/> in your browser.
-
-## Dependencies
-
-- Express
-- Node 5.10.x or above
