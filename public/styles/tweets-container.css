@@ -66,3 +66,34 @@
 .tweet footer .date-posted {
     display: inline;
 }
+
+.tweet footer .icons {
+    float: right;
+    display: none;
+    position: relative;
+    right: 20px;
+    margin: 0px;
+}
+
+.tweet:hover footer .icons {
+    display: flex;
+}
+
+.tweet footer .icons .fas .fa-flag {
+    width: 30px;
+    height: 30px;
+}
+
+.tweet footer .icons .far .fa-thumbs-up {
+    width: 30px;
+    height: 30px;
+}
+
+.tweet footer .icons.fas .fa-retweet {
+    width: 30px;
+    height: 30px;
+}
+
+/* .tweet footer .icons .flag {
+    height: 20px;
+    width: 20px; */

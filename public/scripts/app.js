@@ -13,12 +13,26 @@ function createTweetElement (tweet){
     var $content = $("<p>").addClass("content").text(tweet.content.text).appendTo($tweet);
     var $footer = $("<footer>").appendTo($tweet);
     var $datePosted = $("<p>").addClass("date-posted").text(unixDate(tweet.created_at)).appendTo($footer);
+    var $socialIcons = $("<div>").addClass("icons").appendTo($footer);
+    var $like = $(`<i class="far fa-thumbs-up"></i>`).appendTo($socialIcons);
+    var $retweet = $(`<i class="fas fa-retweet"></i>`).appendTo($socialIcons);
+    var $flag = $(`<i class="fas fa-flag"></i>`).appendTo($socialIcons);
     return $tweet;
 }
 
 function unixDate(digits){
-    var dateTime = new Date(digits);
-    return dateTime;
+    const daysAgo = Math.floor((Date.now() - digits) / 86400000);
+    const hoursAgo = Math.floor((Date.now() - digits) / 3600000);
+    const minutesAgo = Math.floor((Date.now() - digits) / 60000);
+    if (daysAgo < 2 && hoursAgo < 2 && minutesAgo < 2){
+        return "Moments ago.";
+    } else if (daysAgo < 2 && hoursAgo < 2){
+        return minutesAgo + " minutes ago.";
+    } else if (daysAgo < 2 && hoursAgo >= 2){
+        return hoursAgo + " hours ago.";
+    } else {
+        return daysAgo + " days ago";
+    }
 }
 
 $(document).ready(function() {
