@@ -16,20 +16,38 @@
     <script type="text/javascript" src="../vendor/jquery-2.2.3.min.js"></script>
 
     <!-- App JS -->
+    <script type="text/javascript" src="../scripts/login.js"></script>
     <script type="text/javascript" src="../scripts/app.js"></script>
 
 </head>
   <body>
     <nav id="nav-bar">
-      <div>
+      <div id="nav-bar-header">
         <img class="logo" src="../images/bird.png">
         <span class="header">Tweeter</span>
       </div>
     </nav>
-    <main class="container">
-      <div>
-        <p> Hey hey hey </p>
-      </div>
+    <main class="login-container">
+      <section class="login-div">
+        <h2>Log In</h2>
+        <form id="login-form" action="/login" method="POST">
+          <h3>Username:</h3>
+          <input class="login-field" type="email" name="text" placeholder="Please enter your username..."></input>
+          <h3>Password:</h3>
+          <input class="login-field" name="text" placeholder="Please enter your password..."></input>
+        </form>
+        <div class="login-buttons-container">
+          <div>
+            <button form="login-form" id="login">Log In</button>
+          </div>
+          <div>
+            <p style="display: inline">Don't have an account? </p>
+            <form id="nav-to-signup" style="display: inline" action="http://localhost:8080/signup">
+              <input type="submit" value="Sign Up"></input>
+            </form>
+          </div>
+        </div>
+      </section>
     </main>
   </body>
 </html>

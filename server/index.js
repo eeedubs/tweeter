@@ -7,6 +7,7 @@ const express       = require("express");
 const bodyParser    = require("body-parser");
 const app           = express();
 const path          = require("path");
+const bcrypt        = require("bcrypt");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -38,16 +39,27 @@ MongoClient.connect(MongoURL, (err, db) => {
   // so it can define routes that use it to interact with the data layer.
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);
 
-  // Mount the tweets routes at the "/tweets" path prefix:
-  app.use("/tweets", tweetsRoutes);
+  const userHelpers = require('./lib/util/user-helper.js');
 
+  
   app.get("/login", function(req, res) {
     res.render("urls_login");
   });
-
+  
   app.get("/signup", function(req, res) {
     res.render("urls_signup");
   });
+
+  app.post("/signup", function(req, res) {
+    let userInfo = req.body;
+    let avatars = UserHelpers.generateUserAvatars(userInfo.username)
+    console.log(userInfo);
+    // db.collection('users')
+  });
+
+  
+  // Mount the tweets routes at the "/tweets" path prefix:
+  app.use("/tweets", tweetsRoutes);
 });
 
 app.listen(PORT, () => {

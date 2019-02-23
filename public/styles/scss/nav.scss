@@ -5,6 +5,7 @@
     justify-content: space-between;
     align-items: center;
     top: 0;
+    padding-top: 1em;
     padding-left: 2em;
     padding-right: 2em;
     background-color: #00a087;
@@ -36,8 +37,9 @@
 
 %small-buttons {
     display: inline-block;
-    height: 30px;
-    width: 67px;
+    height: 23px;
+    width: 64px;
+    font-size: 0.8em;
     background-color: white;
     color: white;
     border: 1px solid black;
@@ -46,16 +48,22 @@
 
 .signup-button {
     @extend %small-buttons;
-    background-color: rgb(54, 167, 54);
+    background-color: darkgreen;
+    opacity: 0.8;
 }
 
 .login-button {
     @extend %small-buttons;
     background-color: rgb(71, 111, 196);
+    opacity: 0.8;
 }
 
-.login-button:hover, .compose-button:hover, .signup-button:hover {
-    border: 2px solid black;
+.login-button:hover, .signup-button:hover {
+    opacity: 1;
+}
+
+.compose-button:hover {
+    border: 2px black solid;
 }
 
 

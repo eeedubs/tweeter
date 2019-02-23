@@ -16,20 +16,42 @@
     <script type="text/javascript" src="../vendor/jquery-2.2.3.min.js"></script>
 
     <!-- App JS -->
+    <script type="text/javascript" src="../scripts/signup.js"></script>
     <script type="text/javascript" src="../scripts/app.js"></script>
 
   </head>
   <body>
     <nav id="nav-bar">
-      <div>
+      <div id="nav-bar-header">
         <img class="logo" src="../images/bird.png">
         <span class="header">Tweeter</span>
       </div>
     </nav>
-    <main class="container">
-      <div>
-        <p> Hey hey hey </p>
-      </div>
-    </main>
-  </body>
-</html>
+    <main class="signup-container">
+        <section class="signup-div">
+          <h2>Sign Up</h2>
+          <form id="signup-form" action="/signup" method="POST">
+            <h3>First Name:</h3>
+            <input class="signup-field" type="email" name="text" placeholder="Please enter your first name..."></input>
+            <h3>Last Name:</h3>
+            <input class="signup-field" type="text" name="text" placeholder="Please enter your last name..."></input>
+            <h3>Username:</h3>
+            <input class="signup-field" type="text" name="text" placeholder="@your_user_name"></input>
+            <h3>Password:</h3>
+            <input class="signup-field" name="text" placeholder="Please enter a password..."></input>
+          </form>
+          <div class="signup-buttons-container">
+            <div>
+              <button form="signup-form" id="signup">Sign Up</button>
+            </div>
+            <div>
+              <p style="display: inline">Already have an account? </p>
+              <form id="nav-to-login" style="display: inline" action="http://localhost:8080/login">
+                <input type="submit" value="Log In"></input>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+    </body>
+  </html>

@@ -5,6 +5,7 @@
   justify-content: space-between;
   align-items: center;
   top: 0;
+  padding-top: 1em;
   padding-left: 2em;
   padding-right: 2em;
   background-color: #00a087;
@@ -36,8 +37,9 @@
 
 .login-button, .signup-button {
   display: inline-block;
-  height: 30px;
-  width: 67px;
+  height: 23px;
+  width: 64px;
+  font-size: 0.8em;
   background-color: white;
   color: white;
   border: 1px solid black;
@@ -45,15 +47,21 @@
 }
 
 .signup-button {
-  background-color: #36a736;
+  background-color: darkgreen;
+  opacity: 0.8;
 }
 
 .login-button {
   background-color: #476fc4;
+  opacity: 0.8;
 }
 
-.login-button:hover, .compose-button:hover, .signup-button:hover {
-  border: 2px solid black;
+.login-button:hover, .signup-button:hover {
+  opacity: 1;
+}
+
+.compose-button:hover {
+  border: 2px black solid;
 }
 
 /* .compose-button .logo { */
@@ -254,6 +262,51 @@ body {
 
 .tweet footer .icons.fas .fa-retweet {
   width: 30px;
+  height: 30px;
+}
+
+.login-container, .signup-container {
+  position: relative;
+  top: 50px;
+  display: flex;
+  justify-content: center;
+  width: "100%";
+  margin-top: 80px;
+}
+
+.login-div, .signup-div {
+  text-align: center;
+  width: 500px;
+  border: 1px solid black;
+  background-color: white;
+  padding: 5px 10px 5px 10px;
+}
+
+form {
+  width: 100%;
+}
+
+form#login-form, form#signup-form {
+  align-items: flex-start;
+  text-align: left;
+}
+
+form .login-field, form .signup-field {
+  width: inherit;
+  padding-left: 5px;
+  height: 1.75em;
+}
+
+div.login-buttons-container, div.signup-buttons-container {
+  display: inline-flex;
+  width: 100%;
+  padding: 15px 0px 10px 0px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#login, #nav-to-signup, #signup, #nav-to-login {
+  width: 70px;
   height: 30px;
 }
 

@@ -98,6 +98,13 @@ $(document).ready(function() {
         });
     });
 
+    $(function goHome() {
+        let $homeDiv = $("#nav-bar #nav-bar-header");
+        $homeDiv.on("click", function() {
+            window.location.href = "http://localhost:8080";
+        })
+    });
+
     $(function login() {
         let $loginButton = $("#nav-bar .login-button");
         $loginButton.on("click", function() {
@@ -120,7 +127,7 @@ $(document).ready(function() {
         });
     });
 
-    $('form').on('submit', function(event) {
+    $('form.post-tweet').on('submit', function(event) {
         // when a submit event is called on "form", perform a function with argument "e" (for each event occurrence)
         event.preventDefault();
         // prevent the default, which is to reload the page
