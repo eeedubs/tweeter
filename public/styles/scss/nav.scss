@@ -1,0 +1,64 @@
+#nav-bar {
+    z-index: 1;
+    display: flex;
+    position: fixed;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    padding-left: 2em;
+    padding-right: 2em;
+    background-color: #00a087;
+    color: #e8fdff;
+    height: 80px;
+    width: 100%;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+}
+
+.header {
+    vertical-align: top;
+    line-height: 2;
+    margin-left: 10px;
+    font-size: 40px;
+}
+
+.compose-button {
+    height: 35px;
+    width: 120px;
+    font-size: 24px;
+    background-color: white;
+    color: #00a087;
+    border: 1px solid black;
+}
+
+%small-buttons {
+    display: inline-block;
+    height: 30px;
+    width: 67px;
+    background-color: white;
+    color: white;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.signup-button {
+    @extend %small-buttons;
+    background-color: rgb(54, 167, 54);
+}
+
+.login-button {
+    @extend %small-buttons;
+    background-color: rgb(71, 111, 196);
+}
+
+.login-button:hover, .compose-button:hover, .signup-button:hover {
+    border: 2px solid black;
+}
+
+
+/* .compose-button .logo { */
+    /* to fill out later */
+/* } */

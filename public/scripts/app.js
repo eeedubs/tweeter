@@ -5,18 +5,18 @@
  */
 
 function createTweetElement (tweet){
-    var $tweet = $("<article>").addClass("tweet");
-    var $header = $("<header>").appendTo($tweet);
-    var $avatar = $("<img>").addClass("avatar").attr("src", tweet.user.avatars.small).appendTo($header);
-    var $name = $("<h2>").text(tweet.user.name).appendTo($header);
-    var $handle = $("<p>").addClass("handle").text(tweet.user.handle).appendTo($header);
-    var $content = $("<p>").addClass("content").text(tweet.content.text).appendTo($tweet);
-    var $footer = $("<footer>").appendTo($tweet);
-    var $datePosted = $("<p>").addClass("date-posted").text(unixDate(tweet.created_at)).appendTo($footer);
-    var $socialIcons = $("<div>").addClass("icons").appendTo($footer);
-    var $like = $(`<i class="far fa-thumbs-up"></i>`).appendTo($socialIcons);
-    var $retweet = $(`<i class="fas fa-retweet"></i>`).appendTo($socialIcons);
-    var $flag = $(`<i class="fas fa-flag"></i>`).appendTo($socialIcons);
+    let $tweet = $("<article>").addClass("tweet");
+    let $header = $("<header>").appendTo($tweet);
+    let $avatar = $("<img>").addClass("avatar").attr("src", tweet.user.avatars.small).appendTo($header);
+    let $name = $("<h2>").text(tweet.user.name).appendTo($header);
+    let $handle = $("<p>").addClass("handle").text(tweet.user.handle).appendTo($header);
+    let $content = $("<p>").addClass("content").text(tweet.content.text).appendTo($tweet);
+    let $footer = $("<footer>").appendTo($tweet);
+    let $datePosted = $("<p>").addClass("date-posted").text(unixDate(tweet.created_at)).appendTo($footer);
+    let $socialIcons = $("<div>").addClass("icons").appendTo($footer);
+    let $like = $(`<i class="far fa-thumbs-up"></i>`).appendTo($socialIcons);
+    let $retweet = $(`<i class="fas fa-retweet"></i>`).appendTo($socialIcons);
+    let $flag = $(`<i class="fas fa-flag"></i>`).appendTo($socialIcons);
     return $tweet;
 }
 
@@ -42,12 +42,18 @@ $(document).ready(function() {
         tweetDataArray.forEach(function(item) {
             // for each tweet in the array of tweet data, render it an append it to the 
             // .all-tweets section in index.html
-            var $tweet = createTweetElement(item);
+            let $tweet = createTweetElement(item);
             // console.log("Tweet item: ", $tweet);
             $(".all-tweets").prepend($tweet);
         });
     }
     // function to handle the rendering of tweets into DOM structure (tree)
+
+
+    function renderSingleTweet(tweet){
+        let $tweet = createTweetElement(tweet);
+        $(".all-tweets").prepend($tweet);
+    };
 
     function loadTweets (){
         $.get("/tweets")
@@ -62,13 +68,27 @@ $(document).ready(function() {
                 alert("Error");
             });
     }
+    loadTweets();
+
+    function loadNewestTweet(){
+        $.get("/tweets")
+            .done(tweets => {
+                console.log("Got newest tweet! Rendering...");
+                let end = tweets.length - 1
+                renderSingleTweet(tweets[end]);
+            })
+            .fail(() => {
+                alert("Error");
+            });
+    }
+
 
     // Handles the toggling of the "Compose Tweet" field by clicking the 
     // ... "Compose" button. If the error field is visible, it will also 
     // slide up. When the compose button is clicked again to reveal the new-tweet
     // text area, it will autoselect it. 
     $(function toggleCompose() {
-        var $navButton = $("#nav-bar .compose-button");
+        let $navButton = $("#nav-bar .compose-button");
         $navButton.on("click", function() {
             $(".error-container").slideUp("slow");
             $(".new-tweet-container").slideToggle("slow");
@@ -78,9 +98,23 @@ $(document).ready(function() {
         });
     });
 
+    $(function login() {
+        let $loginButton = $("#nav-bar .login-button");
+        $loginButton.on("click", function() {
+            window.location.href = "http://localhost:8080/login";
+        })
+    });
+
+    $(function signup() {
+        let $signupButton = $("#nav-bar .signup-button");
+        $signupButton.on("click", function() {
+            window.location.href = "http://localhost:8080/signup";
+        })
+    });
+
     // Handles the close error button: toggles the error field when clicked.
     $(function closeError() {
-        var $errorButton =  $(".container .new-tweet-container .new-tweet .error-container .error button");
+        let $errorButton =  $(".container .new-tweet-container .new-tweet .error-container .error button");
         $errorButton.on("click", function() {
             $(".error-container").slideToggle();
         });
@@ -121,10 +155,10 @@ $(document).ready(function() {
                 success: function(data){
                     $("form")[0].reset();
                 }
-            }).then(data => {
+            }).then(() => {
                 // after the data is sent, load the tweets, clear the error (if 
                 // ... there is one), then clear the text area.
-                loadTweets();
+                loadNewestTweet();
                 $(".new-tweet .error-container").slideUp();
                 $(".new-tweet .textarea").text("");
                 $(".counter").text("140");

@@ -6,9 +6,14 @@ const PORT          = 8080;
 const express       = require("express");
 const bodyParser    = require("body-parser");
 const app           = express();
+const path          = require("path");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+app.set("views", path.join(__dirname, '../public/views'));
+
+app.set("view engine", "ejs");
 
 const MongoClient = require("mongodb").MongoClient;
 const MongoURL = "mongodb://localhost:27017/tweeter";
@@ -36,15 +41,12 @@ MongoClient.connect(MongoURL, (err, db) => {
   // Mount the tweets routes at the "/tweets" path prefix:
   app.use("/tweets", tweetsRoutes);
 
-  DataHelpers.getTweets((err, tweets) => {
-    if (err) throw err;
-    for (let tweet of tweets){
-      DataHelpers.saveTweet(tweet, () => {
-        DataHelpers.getTweets((err, tweets) => {
-          console.log("Saving the following tweet to the database: ", tweets);
-        });
-      });
-    };
+  app.get("/login", function(req, res) {
+    res.render("urls_login");
+  });
+
+  app.get("/signup", function(req, res) {
+    res.render("urls_signup");
   });
 });
 
