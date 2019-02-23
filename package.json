@@ -15,12 +15,14 @@
     "bcrypt": "^3.0.4",
     "body-parser": "^1.15.2",
     "chance": "^1.0.2",
+    "cookie-session": "^2.0.0-beta.3",
     "ejs": "^2.6.1",
     "express": "^4.13.4",
     "md5": "^2.1.0",
     "mongodb": "^2.2.36",
     "node-sass": "^4.11.0",
-    "sass": "^1.17.1"
+    "sass": "^1.17.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "nodemon": "^1.9.2"

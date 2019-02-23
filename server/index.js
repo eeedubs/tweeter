@@ -8,6 +8,8 @@ const bodyParser    = require("body-parser");
 const app           = express();
 const path          = require("path");
 const bcrypt        = require("bcrypt");
+const uuidv4        = require('uuid/v4');
+const cookieSession = require('cookie-session')
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -15,6 +17,11 @@ app.use(express.static("public"));
 app.set("views", path.join(__dirname, '../public/views'));
 
 app.set("view engine", "ejs");
+
+app.use(cookieSession({
+  name: "session",
+  keys: ["userID"]
+}))
 
 const MongoClient = require("mongodb").MongoClient;
 const MongoURL = "mongodb://localhost:27017/tweeter";
@@ -51,10 +58,31 @@ MongoClient.connect(MongoURL, (err, db) => {
   });
 
   app.post("/signup", function(req, res) {
-    let userInfo = req.body;
-    let avatars = UserHelpers.generateUserAvatars(userInfo.username)
-    console.log(userInfo);
-    // db.collection('users')
+    let parsedUser = req.body;
+    let uuid = uuidv4()
+    let hashedPassword = bcrypt.hashSync(parsedUser.password, 10)
+    let userAvatars = userHelpers.generateUserAvatars(parsedUser.username)
+    let userProfile = {
+      "session_id": uuid,
+      "name": `${parsedUser.firstName} ${parsedUser.lastName}`,
+      "handle": parsedUser.username,
+      "password": hashedPassword,
+      "avatars": userAvatars
+    };
+    return new Promise((resolve, reject) => {
+      resolve(db.collection('users').find({ "handle": parsedUser.username }).count())
+    }).then((countOfMatchingUsers) => {
+      if (countOfMatchingUsers > 0){
+        console.log("This user already exists in the database");
+        res.status(400).send("400 Bad Request Error: A user with the handle provided already exists in the system.");
+      } else {
+        console.log("Adding the following user to the database: ", userProfile);
+        db.collection("users").insertOne(userProfile);
+        req.session.user_id = uuid;
+        parsedUser, userProfile, hashedPassword = null;
+        res.redirect("/");
+      }
+    })
   });
 
   

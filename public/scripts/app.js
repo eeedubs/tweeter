@@ -98,27 +98,6 @@ $(document).ready(function() {
         });
     });
 
-    $(function goHome() {
-        let $homeDiv = $("#nav-bar #nav-bar-header");
-        $homeDiv.on("click", function() {
-            window.location.href = "http://localhost:8080";
-        })
-    });
-
-    $(function login() {
-        let $loginButton = $("#nav-bar .login-button");
-        $loginButton.on("click", function() {
-            window.location.href = "http://localhost:8080/login";
-        })
-    });
-
-    $(function signup() {
-        let $signupButton = $("#nav-bar .signup-button");
-        $signupButton.on("click", function() {
-            window.location.href = "http://localhost:8080/signup";
-        })
-    });
-
     // Handles the close error button: toggles the error field when clicked.
     $(function closeError() {
         let $errorButton =  $(".container .new-tweet-container .new-tweet .error-container .error button");
