@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     // Handles the routing to the signup page from the home page
     $(function signup() {
-        let $signupButton = $("#nav-bar button.signup-button");
+        let $signupButton = $("#nav-bar .signup-button");
         $signupButton.on("click", function() {
             window.location.href = "http://localhost:8080/signup";
         })

@@ -12,6 +12,7 @@ module.exports = function(DataHelpers) {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
+        console.log("Retrieving the following tweets from the Mongo database: ", tweets);
         res.json(tweets);
       }
     });
@@ -25,18 +26,18 @@ module.exports = function(DataHelpers) {
     }
     const user = req.body.user ? req.body.user : userHelper.generateRandomUser();
     const tweet = {
-      user: user,
+      user: JSON.parse(user),
       content: {
         text: req.body.text
       },
       created_at: Date.now()
     };
-
     DataHelpers.saveTweet(tweet, (err) => {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        res.status(201).send();
+        console.log("Posting the following tweet to the Mongo database: ", tweet);
+        res.status(201).send(tweet);
       }
     });
   });

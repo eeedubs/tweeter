@@ -69,10 +69,15 @@ MongoClient.connect(MongoURL, (err, db) => {
     })
   }
 
+  // Mount the tweets routes at the "/tweets/" path prefix:
+  app.use("/tweets", tweetsRoutes);
+
+  // Handles the log in page
   app.get("/login", (req, res) => {
     res.render("urls_login");
   });
   
+  // Handles the sign up page
   app.get("/signup", (req, res) => {
     res.render("urls_signup");
   });
@@ -84,13 +89,19 @@ MongoClient.connect(MongoURL, (err, db) => {
     checkCookie().then((isValidUser) => {
       if (isValidUser){ 
         let variables = {
-          isValidUser
+          "isValidUser": true,
+          "user": {
+            "name": isValidUser.name,
+            "avatars": isValidUser.avatars,
+            "handle": isValidUser.handle
+          }
         }
         res.render("urls_index", variables);
        } else {
          let variables = {
-           isValidUser: null
-         };
+           "isValidUser": false,
+           "user": null
+         }
         res.render("urls_index", variables);
        }
     })
@@ -158,9 +169,6 @@ MongoClient.connect(MongoURL, (err, db) => {
     res.redirect("/");
   })
 
-  
-  // Mount the tweets routes at the "/tweets/" path prefix:
-  app.use("/tweets", tweetsRoutes);
 });
 
 app.listen(PORT, () => {

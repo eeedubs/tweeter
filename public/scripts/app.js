@@ -60,7 +60,7 @@ $(document).ready(function() {
         // this is getting the tweets from tweets.js through index.html
             .done(tweets => {
                 // once the tweets have been received, render them
-                console.log("Got tweets! Rendering...");
+                console.log("APP.JS Tweets: ", tweets);
                 renderTweets(tweets);
             })
             .fail(() => {
@@ -69,19 +69,6 @@ $(document).ready(function() {
             });
     }
     loadTweets();
-
-    function loadNewestTweet(){
-        $.get("/tweets")
-            .done(tweets => {
-                console.log("Got newest tweet! Rendering...");
-                let end = tweets.length - 1
-                renderSingleTweet(tweets[end]);
-            })
-            .fail(() => {
-                alert("Error");
-            });
-    }
-
 
     // Handles the toggling of the "Compose Tweet" field by clicking the 
     // ... "Compose" button. If the error field is visible, it will also 
@@ -106,10 +93,10 @@ $(document).ready(function() {
         });
     });
 
-    $('form.post-tweet').on('submit', function(event) {
+    $('form#post-tweet').on("submit", function(event) {
         // when a submit event is called on "form", perform a function with argument "e" (for each event occurrence)
-        event.preventDefault();
         // prevent the default, which is to reload the page
+        event.preventDefault();
         const formContent = $(this).serialize();
         const formLength = $("textarea").val().length;
         // serialize creates key:value pairs with the data entered ( in this case, key:value = text:<tweet message> )
@@ -131,27 +118,28 @@ $(document).ready(function() {
         }
         if (validateForm() === false){
             event.stopPropagation();
-        } else {
+        } 
+        else {
             // if successful, continue
             $.ajax({
                 // sending the data to the server (asychronously)
                 method: 'POST',
-                url: '/tweets',
+                url: '/tweets/',
                 data: formContent,
                 success: function(data){
-                    $("form")[0].reset();
+                    $("form#post-tweet")[0].reset();
                 }
-            }).then(() => {
+            }).then((tweet) => {
                 // after the data is sent, load the tweets, clear the error (if 
                 // ... there is one), then clear the text area.
-                loadNewestTweet();
+                renderSingleTweet(tweet);
                 $(".new-tweet .error-container").slideUp();
                 $(".new-tweet .textarea").text("");
                 $(".counter").text("140");
             },
             (err) => {
-                throw err;
-                })
-            }
+                throw err.responseJSON;
+            })
+        }
     });
 })

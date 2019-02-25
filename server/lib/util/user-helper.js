@@ -9,7 +9,7 @@ const md5 = require('md5');
 module.exports = {
 
   generateUserAvatars: (handle) => {
-    let userAvatar = `https://vanillicon.com${md5(handle)}`;
+    let userAvatar = `https://vanillicon.com/${md5(handle)}`;
     let avatars = {
       small: `${userAvatar}_50.png`,
       regular: `${userAvatar}.png`,
