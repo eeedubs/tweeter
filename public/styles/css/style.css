@@ -35,24 +35,13 @@
   border: 1px solid black;
 }
 
-.login-button, .signup-button {
+.signup-button, .login-button {
   display: inline-block;
-  height: 23px;
   width: 64px;
-  font-size: 0.8em;
-  background-color: white;
+  font-size: 1em;
+  background-color: #00a087;
   color: white;
-  border: 1px solid black;
-  border-radius: 20px;
-}
-
-.signup-button {
-  background-color: darkgreen;
-  opacity: 0.8;
-}
-
-.login-button {
-  background-color: #476fc4;
+  border: none;
   opacity: 0.8;
 }
 
@@ -297,17 +286,23 @@ form .login-field, form .signup-field {
   height: 1.75em;
 }
 
-div.login-buttons-container, div.signup-buttons-container {
-  display: inline-flex;
-  width: 100%;
-  padding: 15px 0px 10px 0px;
-  justify-content: space-between;
-  align-items: center;
+form span {
+  margin-top: 15px;
+  float: right;
 }
 
-#login, #nav-to-signup, #signup, #nav-to-login {
+form .signup-form-button, form .login-form-button, .button-to-login, .button-to-signup {
   width: 70px;
   height: 30px;
+  margin-bottom: 5px;
+}
+
+.button-to-login, .button-to-signup {
+  display: inline;
+}
+
+form .signup-form-button, form .login-form-button {
+  margin-top: 15px;
 }
 
 /*# sourceMappingURL=style.css.map */

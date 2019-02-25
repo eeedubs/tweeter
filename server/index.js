@@ -48,7 +48,19 @@ MongoClient.connect(MongoURL, (err, db) => {
 
   const userHelpers = require('./lib/util/user-helper.js');
 
-  
+  function authorizeUser(username, password){
+    
+    return new Promise((resolve, reject) => {
+      resolve(db.collection('users').findOne({ "handle": username }));
+    }).then((userInDatabase) => {
+      if (userInDatabase && bcrypt.compareSync(password, userInDatabase.password)){
+        return true;
+      } else {
+        return false;
+      }
+    })
+  }
+
   app.get("/login", function(req, res) {
     res.render("urls_login");
   });
@@ -57,20 +69,46 @@ MongoClient.connect(MongoURL, (err, db) => {
     res.render("urls_signup");
   });
 
+  app.post("/login", function(req, res) {
+    let username = `@${req.body.username}`;
+    let password = req.body.password;
+    let newUUID = uuidv4();
+    async function authenticate(){
+      let isUser = await authorizeUser(username, password);
+      return isUser;
+    }
+    authenticate().then((isValid) => {
+      if (isValid){
+        db.collection("users").findOneAndUpdate({ "handle": username }, {$set: { "session_id": newUUID } }, {}, function(error, response) {
+          if (error){
+            console.log("Error: ", error);
+          } else {
+            console.log("Response: ", response);
+          }
+        })
+        req.session.user_id = newUUID;
+        res.redirect(301, `http://localhost:8080/`);
+      } else {
+        res.status(400).send("Incorrect username and/or password.");
+      }
+    })
+    // let isValid = await authorizeUser(parsedUser.username, parsedUser.password);
+    // console.log(isValid);
+  })
+
   app.post("/signup", function(req, res) {
-    let parsedUser = req.body;
-    let uuid = uuidv4()
-    let hashedPassword = bcrypt.hashSync(parsedUser.password, 10)
-    let userAvatars = userHelpers.generateUserAvatars(parsedUser.username)
+    let newUUID = uuidv4();
+    let hashedPassword = bcrypt.hashSync(req.body.password, 10)
+    let userAvatars = userHelpers.generateUserAvatars(req.body.username)
     let userProfile = {
-      "session_id": uuid,
-      "name": `${parsedUser.firstName} ${parsedUser.lastName}`,
-      "handle": parsedUser.username,
+      "session_id": newUUID,
+      "name": `${req.body.firstName} ${req.body.lastName}`,
+      "handle": `@${req.body.username}`,
       "password": hashedPassword,
       "avatars": userAvatars
     };
     return new Promise((resolve, reject) => {
-      resolve(db.collection('users').find({ "handle": parsedUser.username }).count())
+      resolve(db.collection('users').find({ "handle": req.body.username }).count())
     }).then((countOfMatchingUsers) => {
       if (countOfMatchingUsers > 0){
         console.log("This user already exists in the database");
@@ -78,9 +116,9 @@ MongoClient.connect(MongoURL, (err, db) => {
       } else {
         console.log("Adding the following user to the database: ", userProfile);
         db.collection("users").insertOne(userProfile);
-        req.session.user_id = uuid;
-        parsedUser, userProfile, hashedPassword = null;
-        res.redirect("/");
+        req.session.user_id = newUUID;
+        userProfile, hashedPassword = null;
+        res.redirect(301, `http://localhost:8080/`);
       }
     })
   });

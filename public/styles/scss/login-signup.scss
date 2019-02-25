@@ -29,15 +29,23 @@ form .login-field, form .signup-field {
   height: 1.75em;
 }
 
-div.login-buttons-container, div.signup-buttons-container {
-  display: inline-flex;
-  width: 100%;
-  padding: 15px 0px 10px 0px;
-  justify-content: space-between;
-  align-items: center;
+form span {
+  margin-top: 15px;
+  float: right;
 }
 
-#login, #nav-to-signup, #signup, #nav-to-login {
+%all-buttons {
   width: 70px;
   height: 30px;
+  margin-bottom: 5px;
+}
+
+.button-to-login, .button-to-signup {
+  @extend %all-buttons;
+  display: inline;
+}
+
+form .signup-form-button, form .login-form-button {
+  @extend %all-buttons;
+  margin-top: 15px;
 }

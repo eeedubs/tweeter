@@ -30,23 +30,17 @@
     <main class="login-container">
       <section class="login-div">
         <h2>Log In</h2>
-        <form id="login-form" action="/login" method="POST">
-          <h3>Username:</h3>
-          <input class="login-field" type="email" name="text" placeholder="Please enter your username..."></input>
-          <h3>Password:</h3>
-          <input class="login-field" name="text" placeholder="Please enter your password..."></input>
-        </form>
-        <div class="login-buttons-container">
-          <div>
-            <button form="login-form" id="login">Log In</button>
-          </div>
-          <div>
-            <p style="display: inline">Don't have an account? </p>
-            <form id="nav-to-signup" style="display: inline" action="http://localhost:8080/signup">
-              <input type="submit" value="Sign Up"></input>
-            </form>
-          </div>
-        </div>
+          <form id="login-form" action="/login" method="POST">
+            <h3>Username:</h3>
+            <input class="login-field" type="text" name="username" placeholder="Please enter your username..."></input>
+            <h3>Password:</h3>
+            <input class="login-field" type="password" name="password" autocomplete="off" placeholder="Please enter your password..."></input>
+            <input class="login-form-button" type="submit" value="Log In"></input>
+            <span class="nav-to-signup">
+              <p style="display: inline">Don't have an account? </p>
+              <button type="button" class="button-to-signup" onclick="window.location.href='http://localhost:8080/signup'">Sign Up</button>
+            </span>
+          </form>
       </section>
     </main>
   </body>

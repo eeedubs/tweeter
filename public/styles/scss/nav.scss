@@ -35,26 +35,13 @@
     border: 1px solid black;
 }
 
-%small-buttons {
+.signup-button, .login-button {
     display: inline-block;
-    height: 23px;
     width: 64px;
-    font-size: 0.8em;
-    background-color: white;
+    font-size: 1em;
+    background-color: #00a087;
     color: white;
-    border: 1px solid black;
-    border-radius: 20px;
-}
-
-.signup-button {
-    @extend %small-buttons;
-    background-color: darkgreen;
-    opacity: 0.8;
-}
-
-.login-button {
-    @extend %small-buttons;
-    background-color: rgb(71, 111, 196);
+    border: none;
     opacity: 0.8;
 }
 
