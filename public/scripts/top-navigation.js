@@ -10,7 +10,7 @@ $(document).ready(function() {
 
     // Handles the routing to the login page from the home page
     $(function login() {
-        let $loginButton = $("#nav-bar .login-button");
+        let $loginButton = $("#nav-bar button.login-button");
         $loginButton.on("click", function() {
             window.location.href = "http://localhost:8080/login";
         })
@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     // Handles the routing to the signup page from the home page
     $(function signup() {
-        let $signupButton = $("#nav-bar .signup-button");
+        let $signupButton = $("#nav-bar button.signup-button");
         $signupButton.on("click", function() {
             window.location.href = "http://localhost:8080/signup";
         })

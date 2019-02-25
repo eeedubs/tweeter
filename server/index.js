@@ -12,7 +12,6 @@ const uuidv4        = require('uuid/v4');
 const cookieSession = require('cookie-session')
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
 
 app.set("views", path.join(__dirname, '../public/views'));
 
@@ -22,6 +21,8 @@ app.use(cookieSession({
   name: "session",
   keys: ["userID"]
 }))
+
+app.use(express.static('public'));
 
 const MongoClient = require("mongodb").MongoClient;
 const MongoURL = "mongodb://localhost:27017/tweeter";
@@ -49,7 +50,6 @@ MongoClient.connect(MongoURL, (err, db) => {
   const userHelpers = require('./lib/util/user-helper.js');
 
   function authorizeUser(username, password){
-    
     return new Promise((resolve, reject) => {
       resolve(db.collection('users').findOne({ "handle": username }));
     }).then((userInDatabase) => {
@@ -61,21 +61,47 @@ MongoClient.connect(MongoURL, (err, db) => {
     })
   }
 
-  app.get("/login", function(req, res) {
+  function validateCookie(userCookie){
+    return new Promise((resolve, reject) => {
+      resolve(db.collection("users").findOne({ "session_id": userCookie }));
+    }).then((foundUser) => {
+      return foundUser ? foundUser : false;
+    })
+  }
+
+  app.get("/login", (req, res) => {
     res.render("urls_login");
   });
   
-  app.get("/signup", function(req, res) {
+  app.get("/signup", (req, res) => {
     res.render("urls_signup");
   });
 
-  app.post("/login", function(req, res) {
+  app.get("/", (req, res) => {
+    let checkCookie = async function(){
+      return await validateCookie(req.session.user_id);
+    }
+    checkCookie().then((isValidUser) => {
+      if (isValidUser){ 
+        let variables = {
+          isValidUser
+        }
+        res.render("urls_index", variables);
+       } else {
+         let variables = {
+           isValidUser: null
+         };
+        res.render("urls_index", variables);
+       }
+    })
+  })
+
+  app.post("/login", (req, res) => {
     let username = `@${req.body.username}`;
     let password = req.body.password;
     let newUUID = uuidv4();
-    async function authenticate(){
-      let isUser = await authorizeUser(username, password);
-      return isUser;
+    let authenticate = async function(){
+      return await authorizeUser(username, password);
     }
     authenticate().then((isValid) => {
       if (isValid){
@@ -87,7 +113,7 @@ MongoClient.connect(MongoURL, (err, db) => {
           }
         })
         req.session.user_id = newUUID;
-        res.redirect(301, `http://localhost:8080/`);
+        res.redirect(301, "/");
       } else {
         res.status(400).send("Incorrect username and/or password.");
       }
@@ -96,35 +122,44 @@ MongoClient.connect(MongoURL, (err, db) => {
     // console.log(isValid);
   })
 
-  app.post("/signup", function(req, res) {
+  app.post("/signup", (req, res) => {
     let newUUID = uuidv4();
-    let hashedPassword = bcrypt.hashSync(req.body.password, 10)
-    let userAvatars = userHelpers.generateUserAvatars(req.body.username)
-    let userProfile = {
-      "session_id": newUUID,
-      "name": `${req.body.firstName} ${req.body.lastName}`,
-      "handle": `@${req.body.username}`,
-      "password": hashedPassword,
-      "avatars": userAvatars
-    };
-    return new Promise((resolve, reject) => {
-      resolve(db.collection('users').find({ "handle": req.body.username }).count())
-    }).then((countOfMatchingUsers) => {
-      if (countOfMatchingUsers > 0){
-        console.log("This user already exists in the database");
-        res.status(400).send("400 Bad Request Error: A user with the handle provided already exists in the system.");
-      } else {
-        console.log("Adding the following user to the database: ", userProfile);
-        db.collection("users").insertOne(userProfile);
-        req.session.user_id = newUUID;
-        userProfile, hashedPassword = null;
-        res.redirect(301, `http://localhost:8080/`);
-      }
-    })
+    if (!req.body.firstName || !req.body.lastName || !req.body.username || !req.body.password){
+      res.status(400).send("400 Bad Request Error: Signup request could not be completed due to missing information.");
+    } else {
+      let hashedPassword = bcrypt.hashSync(req.body.password, 10)
+      let userAvatars = userHelpers.generateUserAvatars(req.body.username)
+      let userProfile = {
+        "session_id": newUUID,
+        "name": `${req.body.firstName} ${req.body.lastName}`,
+        "handle": `@${req.body.username}`,
+        "password": hashedPassword,
+        "avatars": userAvatars
+      };
+      return new Promise((resolve, reject) => {
+        resolve(db.collection('users').find({ "handle": req.body.username }).count())
+      }).then((countOfMatchingUsers) => {
+        if (countOfMatchingUsers > 0){
+          console.log("This user already exists in the database");
+          res.status(400).send("400 Bad Request Error: A user with the handle provided already exists in the system.");
+        } else {
+          console.log("Adding the following user to the database: ", userProfile);
+          db.collection("users").insertOne(userProfile);
+          req.session.user_id = newUUID;
+          userProfile, hashedPassword = null;
+          res.redirect(301, "/");
+        }
+      })
+    }
   });
 
+  app.post("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/");
+  })
+
   
-  // Mount the tweets routes at the "/tweets" path prefix:
+  // Mount the tweets routes at the "/tweets/" path prefix:
   app.use("/tweets", tweetsRoutes);
 });
 

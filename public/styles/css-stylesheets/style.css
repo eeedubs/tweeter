@@ -35,7 +35,7 @@
   border: 1px solid black;
 }
 
-.signup-button, .login-button {
+.signup-button, .login-button, .logout-button {
   display: inline-block;
   width: 64px;
   font-size: 1em;
@@ -45,8 +45,12 @@
   opacity: 0.8;
 }
 
-.login-button:hover, .signup-button:hover {
+.login-button:hover, .signup-button:hover, .logout-button:hover {
   opacity: 1;
+}
+
+.login-button:focus, .signup-button:focus, .logout-button:focus {
+  outline: 0;
 }
 
 .compose-button:hover {
