@@ -4,7 +4,7 @@ $(document).ready(function() {
     $(function goHome() {
       let $homeDiv = $("#nav-bar #nav-bar-header");
       $homeDiv.on("click", function() {
-          window.location.href = "http://localhost:8080";
+          window.location.href = "/";
       })
     });
 
@@ -12,7 +12,7 @@ $(document).ready(function() {
     $(function login() {
         let $loginButton = $("#nav-bar button.login-button");
         $loginButton.on("click", function() {
-            window.location.href = "http://localhost:8080/login";
+            window.location.href = "/login";
         })
     });
 
@@ -20,7 +20,7 @@ $(document).ready(function() {
     $(function signup() {
         let $signupButton = $("#nav-bar .signup-button");
         $signupButton.on("click", function() {
-            window.location.href = "http://localhost:8080/signup";
+            window.location.href = "/signup";
         })
     });
   })
