@@ -12,6 +12,7 @@ const path          = require("path");
 const bcrypt        = require("bcrypt");
 const uuidv4        = require('uuid/v4');
 const cookieSession = require('cookie-session')
+const cors          = require('cors');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -23,6 +24,14 @@ app.use(cookieSession({
   name: "session",
   keys: ["userID"]
 }))
+
+const corsOption = {
+  origin: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  exposedHeaders: ['x-auth-token']
+};
+app.use(cors(corsOption));
 
 app.use(express.static(path.join(__dirname, "../public")));
 
