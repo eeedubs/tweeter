@@ -4,7 +4,6 @@
 
 require('dotenv').config();
 
-const PORT          = process.env.PORT;
 const express       = require("express");
 const bodyParser    = require("body-parser");
 const app           = express();
@@ -174,6 +173,6 @@ MongoClient.connect(MongoURL, (err, db) => {
 
 });
 
-app.listen(PORT, () => {
-  console.log("Example app listening on port " + PORT);
+app.listen(process.env.PORT, () => {
+  console.log("Example app listening on port " + process.env.PORT);
 });
