@@ -6,17 +6,22 @@
 
 function createTweetElement (tweet){
     let $tweet = $("<article>").addClass("tweet");
-    let $header = $("<header>").appendTo($tweet);
-    let $avatar = $("<img>").addClass("avatar").attr("src", tweet.user.avatars.small).appendTo($header);
-    let $name = $("<h2>").text(tweet.user.name).appendTo($header);
-    let $handle = $("<p>").addClass("handle").text(tweet.user.handle).appendTo($header);
-    let $content = $("<p>").addClass("content").text(tweet.content.text).appendTo($tweet);
-    let $footer = $("<footer>").appendTo($tweet);
-    let $datePosted = $("<p>").addClass("date-posted").text(unixDate(tweet.created_at)).appendTo($footer);
-    let $socialIcons = $("<div>").addClass("icons").appendTo($footer);
-    let $like = $(`<i class="far fa-thumbs-up"></i>`).appendTo($socialIcons);
-    let $retweet = $(`<i class="fas fa-retweet"></i>`).appendTo($socialIcons);
-    let $flag = $(`<i class="fas fa-flag"></i>`).appendTo($socialIcons);
+        let $header = $("<header>").appendTo($tweet);
+            let $avatar = $("<img>").addClass("avatar").attr("src", tweet.user.avatars.small).appendTo($header);
+            let $name = $("<h2>").text(tweet.user.name).appendTo($header);
+            let $handle = $("<p>").addClass("handle").text(tweet.user.handle).appendTo($header);
+        let $content = $("<p>").addClass("content").text(tweet.content.text).appendTo($tweet);
+        let $footer = $("<footer>").appendTo($tweet);
+            let $datePostedDiv = $("<div>").appendTo($footer);
+                let $datePosted = $("<p>").text(unixDate(tweet.created_at)).appendTo($datePostedDiv);
+            let $socialIcons = $("<div>").addClass("icons").appendTo($footer);
+                let $numberOfLikesDiv = $(`<div id="likes-count-div">`).appendTo($socialIcons);
+                    let $numberOfLikes = $(`<p class="likes-count" id="likes-count">${tweet.likes.length}</p>`).appendTo($numberOfLikesDiv);
+                let $like = $(`<i class="fas fa-thumbs-up" id="like-button" style="color: ${tweet.likes.length === 0 ? "" : "#3b5998" }"></i>`).appendTo($socialIcons);
+                let $retweet = $(`<i class="fas fa-retweet"></i>`).appendTo($socialIcons);
+                let $flag = $(`<i class="fas fa-flag"></i>`).appendTo($socialIcons);
+                let $tweetID = $(`<input type="hidden" id="tweetID" value="${tweet._id}">`).appendTo($socialIcons);
+                let $userCreatedByID = $(`<input type="hidden" id="tweetCreatedByUserID" name="tweetCreatedByUserID" value="${tweet.user.id}">`).appendTo($socialIcons);
     return $tweet;
 }
 
@@ -36,6 +41,7 @@ function unixDate(digits){
 }
 
 $(document).ready(function() {
+    loadTweets();
 
     function renderTweets(tweetDataArray){
         // render tweets for an array of tweet data
@@ -60,7 +66,6 @@ $(document).ready(function() {
         // this is getting the tweets from tweets.js through index.html
             .done(tweets => {
                 // once the tweets have been received, render them
-                console.log("APP.JS Tweets: ", tweets);
                 renderTweets(tweets);
             })
             .fail(() => {
@@ -68,7 +73,6 @@ $(document).ready(function() {
                 alert("Error");
             });
     }
-    loadTweets();
 
     // Handles the toggling of the "Compose Tweet" field by clicking the 
     // ... "Compose" button. If the error field is visible, it will also 
@@ -93,6 +97,34 @@ $(document).ready(function() {
         });
     });
 
+
+    $("body").on("click", "i.fas.fa-thumbs-up", function(event){
+        let tweetID = $(this).siblings("input#tweetID")[0].value;
+        let loggedInUserID = JSON.parse($("input#user")[0].value).id;
+        let userWhoCreatedTweetID = $(this).siblings("input#tweetCreatedByUserID")[0].value;
+        let variablesData = {
+            "tweetID": tweetID,
+            "loggedInUserID": loggedInUserID
+        }
+        if (loggedInUserID !== userWhoCreatedTweetID){
+            $.ajax({
+                method: "PUT",
+                url: "/tweets/like", 
+                data: variablesData
+            }).then((data) => {
+                let newLikeCount = data.newLikeCount;
+                $(this).siblings("div#likes-count-div").children("p").text(newLikeCount);
+                if (newLikeCount === 0){
+                    $(this).css("color", "");
+                } else {
+                    $(this).css("color", "#3b5998");
+                }
+            })
+        } else {
+            alert("You cannot like your own tweet!");
+        }
+    })
+
     $('form#post-tweet').on("submit", function(event) {
         // when a submit event is called on "form", perform a function with argument "e" (for each event occurrence)
         // prevent the default, which is to reload the page
@@ -100,7 +132,6 @@ $(document).ready(function() {
         const formContent = $(this).serialize();
         const formLength = $("textarea").val().length;
         // serialize creates key:value pairs with the data entered ( in this case, key:value = text:<tweet message> )
-        // console.log('formContent', formLength);
         function validateForm(){
             if (formLength >= 140){
                 // Display the error field and add error text 
@@ -126,7 +157,7 @@ $(document).ready(function() {
                 method: 'POST',
                 url: '/tweets/',
                 data: formContent,
-                success: function(data){
+                success: () => {
                     $("form#post-tweet")[0].reset();
                 }
             }).then((tweet) => {

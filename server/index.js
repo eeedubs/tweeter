@@ -93,7 +93,8 @@ MongoClient.connect(MongoURL, (err, db) => {
           "user": {
             "name": isValidUser.name,
             "avatars": isValidUser.avatars,
-            "handle": isValidUser.handle
+            "handle": isValidUser.handle,
+            "id": isValidUser._id
           }
         }
         res.render("urls_index", variables);

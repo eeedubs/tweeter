@@ -91,7 +91,7 @@ body {
   display: initial;
 }
 
-.new-tweet-container .new-tweet {
+.new-tweet {
   display: inline-block;
   background-color: #ececec;
   width: 400px;
@@ -103,33 +103,35 @@ body {
   /* Creates padding inside of the container */
 }
 
-.new-tweet-container .new-tweet h2 {
+.new-tweet h2 {
   margin-top: 10px;
   /* Moves the "Compose Tweet" text down from the top */
   margin-bottom: 2px;
   /* Removes space between "Compose Tweet" and the solid line */
 }
 
-.new-tweet-container .new-tweet .textarea {
+.new-tweet .textarea {
   padding-left: 10px;
   padding-top: 10px;
   width: 100%;
 }
 
-.new-tweet-container .new-tweet .tweet-button:hover {
+.tweet-button:hover {
   background-color: #418ff4;
 }
 
-.new-tweet-container .new-tweet .counter {
+.counter {
   float: right;
+  position: relative;
+  bottom: 10px;
   background-color: #ececec;
 }
 
-.new-tweet-container .new-tweet .error-container {
+.error-container {
   display: none;
 }
 
-.new-tweet-container .new-tweet .error-container .error {
+.error {
   display: inline-block;
   text-align: center;
   opacity: 1;
@@ -145,18 +147,15 @@ body {
   margin: 0 auto;
   margin-left: -10px;
 }
-
-.new-tweet-container .new-tweet .error-container .error h2 {
+.error h2 {
   font-weight: bold;
   opacity: 1;
   margin-top: -5px;
 }
-
-.new-tweet-container .new-tweet .error-container .error p {
+.error p {
   opacity: 1;
 }
-
-.new-tweet-container .new-tweet .error-container .error button {
+.error button {
   border-radius: 10px;
   width: 70px;
 }
@@ -175,11 +174,29 @@ body {
   border: solid 1px;
   border-radius: 10px;
 }
-
-.tweet:hover {
-  opacity: 1;
+.tweet header {
+  display: inline-block;
+  background-color: lightblue;
+  padding: 12px;
+  height: 45%;
+  width: 100%;
 }
-
+.tweet header .avatar {
+  display: inline-block;
+  height: 60px;
+  width: 60px;
+  border-radius: 5px;
+}
+.tweet header h2 {
+  display: inline-block;
+  position: relative;
+  bottom: 40px;
+  margin-left: 8px;
+}
+.tweet header .handle {
+  float: right;
+  margin: 0px;
+}
 .tweet .content {
   position: relative;
   background-color: white;
@@ -189,73 +206,34 @@ body {
   padding-left: 10px;
   margin: 0px;
 }
-
-/* base */
-.tweet header {
-  display: inline-block;
-  background-color: lightblue;
-  padding: 12px;
-  height: 45%;
-  width: 100%;
-}
-
 .tweet footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   height: 20%;
   width: 100%;
-  padding-left: 5px;
-  padding-top: 10px;
-  /* margin-top: 5px; */
+  padding-left: 10px;
   border-top: solid 0.5px;
 }
-
-.tweet header .avatar {
-  display: inline-block;
-  height: 60px;
-  width: 60px;
-  border-radius: 5px;
-}
-
-.tweet header h2 {
-  display: inline-block;
-  position: relative;
-  bottom: 40px;
-  margin-left: 8px;
-}
-
-.tweet header .handle {
-  float: right;
-  margin: 0px;
-}
-
-.tweet footer .date-posted {
-  display: inline;
-}
-
-.tweet footer .icons {
-  float: right;
+.tweet footer div.icons {
   display: none;
+  align-items: center;
+  padding-right: 6px;
+}
+.tweet footer div.icons p.likes-count {
   position: relative;
-  right: 20px;
-  margin: 0px;
+  top: 2px;
+}
+.tweet footer div.icons .fa-flag, .tweet footer div.icons .fa-thumbs-up, .tweet footer div.icons .fa-retweet {
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
-.tweet:hover footer .icons {
+.tweet:hover {
+  opacity: 1;
+}
+.tweet:hover div.icons {
   display: flex;
-}
-
-.tweet footer .icons .fas .fa-flag {
-  width: 30px;
-  height: 30px;
-}
-
-.tweet footer .icons .far .fa-thumbs-up {
-  width: 30px;
-  height: 30px;
-}
-
-.tweet footer .icons.fas .fa-retweet {
-  width: 30px;
-  height: 30px;
 }
 
 .login-container, .signup-container {
