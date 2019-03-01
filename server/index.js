@@ -119,7 +119,7 @@ MongoClient.connect(MongoURL, (err, db) => {
     }
     authenticate().then((isValid) => {
       if (isValid){
-        db.collection("users").findOneAndUpdate({ "handle": username }, {$set: { "session_id": newUUID } }, {}, function(error, response) {
+        db.collection("users").findOneAndUpdate({ "handle": username }, { $set: { "session_id": newUUID } }, {}, function(error, response) {
           if (error){
             console.log("Error: ", error);
           } else {
@@ -157,7 +157,7 @@ MongoClient.connect(MongoURL, (err, db) => {
           console.log("This user already exists in the database");
           res.status(400).send("400 Bad Request Error: A user with the handle provided already exists in the system.");
         } else {
-          console.log("Adding the following user to the database: ", userProfile);
+          console.log("Adding the following user to the database: ", userProfile.handle);
           db.collection("users").insertOne(userProfile);
           req.session.user_id = newUUID;
           userProfile, hashedPassword = null;
