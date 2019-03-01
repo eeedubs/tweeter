@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A twitter clone by Lighthouse Labs for web bootcamp students to learn front-end dev skillz",
   "engines": {
-    "node": "8.x"
+    "node": "8.9.4"
   },
   "main": "server/index.js",
   "scripts": {
