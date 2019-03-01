@@ -110,9 +110,9 @@ MongoClient.connect(MongoURL, (err, db) => {
     })
   })
 
-  app.get("*", (req, res) => {
-    response.sendFile(path.resolve(__dirname, '../public', '/views/urls_index.html'))
-  })
+  // app.get("*", (req, res) => {
+  //   response.sendFile(path.resolve(__dirname, '../public', '/views/urls_index.html'))
+  // })
 
   app.post("/login", (req, res) => {
     let username = `@${req.body.username}`;

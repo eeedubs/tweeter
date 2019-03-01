@@ -18,7 +18,7 @@ module.exports = function(DataHelpers) {
   });
 
   // Handles the liking and unliking of tweets
-  tweetsRoutes.put("/like", function(req, res) {
+  tweetsRoutes.post("/like", function(req, res) {
     let tweetID = req.body.tweetID;
     let loggedInUserID = req.body.loggedInUserID;
     DataHelpers.getSingleTweetByID(tweetID, (err, retrievedTweet) => {
