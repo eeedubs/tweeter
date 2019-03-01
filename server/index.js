@@ -4,6 +4,7 @@
 
 require('dotenv').config();
 
+const PORT          = process.env.PORT || 8080;
 const express       = require("express");
 const bodyParser    = require("body-parser");
 const app           = express();
@@ -23,7 +24,7 @@ app.use(cookieSession({
   keys: ["userID"]
 }))
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, "../public")));
 
 const MongoClient = require("mongodb").MongoClient;
 const MongoURL = "mongodb://localhost:27017/tweeter";
@@ -109,6 +110,10 @@ MongoClient.connect(MongoURL, (err, db) => {
     })
   })
 
+  app.get("*", (req, res) => {
+    response.sendFile(path.resolve(__dirname, '../public', '/views/urls_index.html'))
+  })
+
   app.post("/login", (req, res) => {
     let username = `@${req.body.username}`;
     let password = req.body.password;
@@ -173,6 +178,6 @@ MongoClient.connect(MongoURL, (err, db) => {
 
 });
 
-app.listen(process.env.PORT, () => {
-  console.log("Example app listening on port " + process.env.PORT);
+app.listen(PORT, () => {
+  console.log(`Server running at localhost:${PORT}/`);
 });

@@ -106,7 +106,7 @@ $(document).ready(function() {
             "tweetID": tweetID,
             "loggedInUserID": loggedInUserID
         }
-        if (loggedInUserID !== userWhoCreatedTweetID){
+        if (loggedInUserID && loggedInUserID !== userWhoCreatedTweetID){
             $.ajax({
                 method: "PUT",
                 url: "/tweets/like", 
