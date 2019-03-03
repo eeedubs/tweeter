@@ -37,6 +37,7 @@ app.use(express.static(path.join(__dirname, "../public")));
 const MongoClient = require("mongodb").MongoClient;
 const MongoURL = process.env.MONGODB_URI || "mongodb://localhost:27017/tweeter";
 
+
 MongoClient.connect(MongoURL, (err, db) => {
   if (err) {
     console.error("Failed to connect: ${MongoURL}");
