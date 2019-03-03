@@ -187,5 +187,5 @@ MongoClient.connect(MongoURL, (err, db) => {
 });
 
 app.listen(process.env.PORT || 8080, () => {
-  console.log(`Server running at localhost:${PORT}/`);
+  console.log(`Server running at localhost:${process.env.PORT || 8080}/`);
 });
