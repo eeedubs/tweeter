@@ -12,6 +12,8 @@ const bcrypt        = require("bcrypt");
 const uuidv4        = require('uuid/v4');
 const cookieSession = require('cookie-session')
 const cors          = require('cors');
+const PORT          = process.env.PORT || 8080;
+const webURL        = (PORT === 8080) ? "localhost:8080/" : "https://eeedubs-tweeter.herokuapp.com/" 
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -85,12 +87,18 @@ MongoClient.connect(MongoURL, (err, db) => {
 
   // Handles the log in page
   app.get("/login", (req, res) => {
-    res.render("urls_login");
+    let variables = {
+      "webURL": webURL
+    }
+    res.render("urls_login", variables);
   });
   
   // Handles the sign up page
   app.get("/signup", (req, res) => {
-    res.render("urls_signup");
+    let variables = {
+      "webURL": webURL
+    }
+    res.render("urls_signup", variables);
   });
 
   app.get("/", (req, res) => {
@@ -181,6 +189,6 @@ MongoClient.connect(MongoURL, (err, db) => {
 
 });
 
-app.listen(process.env.PORT || 8080, () => {
+app.listen(PORT, () => {
   console.log(`Server running at localhost:${process.env.PORT || 8080}/`);
 });
