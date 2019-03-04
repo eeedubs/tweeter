@@ -99,6 +99,10 @@ $(document).ready(function() {
 
 
     $("body").on("click", "i.fas.fa-thumbs-up", function(event){
+        if (!$("input#user")[0]){
+            alert("You must be logged in to 'like' tweets!");
+            return;
+        } 
         let tweetID = $(this).siblings("input#tweetID")[0].value;
         let loggedInUserID = JSON.parse($("input#user")[0].value).id;
         let userWhoCreatedTweetID = $(this).siblings("input#tweetCreatedByUserID")[0].value;
@@ -106,7 +110,7 @@ $(document).ready(function() {
             "tweetID": tweetID,
             "loggedInUserID": loggedInUserID
         }
-        if (loggedInUserID && loggedInUserID !== userWhoCreatedTweetID){
+        if (loggedInUserID !== userWhoCreatedTweetID){
             $.ajax({
                 method: "PUT",
                 url: "/tweets/like", 
@@ -122,8 +126,9 @@ $(document).ready(function() {
             })
         } else if (loggedInUserID === userWhoCreatedTweetID){
             alert("You cannot like your own tweet!");
+            return;
         } else {
-            alert("You must be logged in to 'like' tweets!");
+            throw new Error("Error: unhandled error detected in app.js.");
         }
     })
 
