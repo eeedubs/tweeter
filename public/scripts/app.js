@@ -120,7 +120,9 @@ $(document).ready(function() {
                     $(this).css("color", "#3b5998");
                 }
             })
-        } else {
+        } else if (!loggedInUserID){
+            alert("You must be logged in to 'like' tweets!");
+        } else if (loggedInUserID === userWhoCreatedTweetID){
             alert("You cannot like your own tweet!");
         }
     })
