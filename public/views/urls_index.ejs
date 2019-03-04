@@ -53,7 +53,7 @@
           <form id="post-tweet" action="/tweets/" method="POST">
             <textarea class="textarea" name="text" placeholder="What are you humming about?"></textarea>
             <input class="tweet-button" type="submit" value="Tweet">
-            <input type="hidden" id="user" name="user" value="<%= JSON.stringify(user) %>">
+            <input hidden id="user" name="user" value="<%= JSON.stringify(user) %>">
             <span class="counter">140</span>
           </form>
           <div class="error-container">
