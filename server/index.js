@@ -13,7 +13,7 @@ const uuidv4        = require('uuid/v4');
 const cookieSession = require('cookie-session')
 const cors          = require('cors');
 const PORT          = process.env.PORT || 8080;
-const webURL        = (PORT === 8080) ? "localhost:8080/" : "https://eeedubs-tweeter.herokuapp.com/" 
+const webURL        = (PORT === 8080) ? "localhost:8080" : "https://eeedubs-tweeter.herokuapp.com" 
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
