@@ -20,8 +20,8 @@ function createTweetElement (tweet){
                 let $like = $(`<i class="fas fa-thumbs-up" id="like-button" style="color: ${tweet.likes.length === 0 ? "" : "#3b5998" }"></i>`).appendTo($socialIcons);
                 let $retweet = $(`<i class="fas fa-retweet"></i>`).appendTo($socialIcons);
                 let $flag = $(`<i class="fas fa-flag"></i>`).appendTo($socialIcons);
-                let $tweetID = $(`<input type="hidden" id="tweetID" value="${tweet._id}">`).appendTo($socialIcons);
-                let $userCreatedByID = $(`<input type="hidden" id="tweetCreatedByUserID" name="tweetCreatedByUserID" value="${tweet.user.id}">`).appendTo($socialIcons);
+                let $tweetID = $(`<input hidden id="tweetID" value="${tweet._id}">`).appendTo($socialIcons);
+                let $userCreatedByID = $(`<input hidden id="tweetCreatedByUserID" name="tweetCreatedByUserID" value="${tweet.user.id}">`).appendTo($socialIcons);
     return $tweet;
 }
 
