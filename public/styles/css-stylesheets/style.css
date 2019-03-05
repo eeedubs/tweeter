@@ -280,7 +280,7 @@ form span {
 }
 
 form .signup-form-button, form .login-form-button, .button-to-login, .button-to-signup {
-  width: 70px;
+  min-width: 70px;
   height: 30px;
   margin-bottom: 5px;
 }
