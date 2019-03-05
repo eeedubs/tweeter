@@ -15,15 +15,24 @@
 }
 
 .logo {
-    width: 80px;
-    height: 80px;
+    width: 3em;
+    height: 3em;
+}
+
+#nav-bar-header {
+    display: inline-flex;
+    align-items: center; 
+}
+
+#nav-bar-buttons {
+    display: inline-flex;
+    align-items: center; 
 }
 
 .header {
-    vertical-align: top;
-    line-height: 2;
     margin-left: 10px;
-    font-size: 40px;
+    margin-right: 10px;
+    font-size: 2.2em;
 }
 
 .compose-button {

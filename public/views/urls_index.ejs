@@ -17,7 +17,7 @@
   
 
     <!-- App JS -->
-    <script type="text/javascript" src="/scripts/top-navigation-links.js"></script>
+    <script type="text/javascript" src="/scripts/navigation-links.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
   </head>
@@ -28,9 +28,9 @@
     <nav id="nav-bar">
       <div id="nav-bar-header">
         <img class="logo" src="/images/bird.png">
-          <span class="header">Tweeter</span>
+        <span class="header">Tweeter</span>
       </div>
-      <div>
+      <div id="nav-bar-buttons">
         <% if (isValidUser) { %>
           <button class="compose-button">Compose</button>
           <form style="display: inline" action="/logout" method="POST">

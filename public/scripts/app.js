@@ -7,9 +7,11 @@
 function createTweetElement (tweet){
     let $tweet = $("<article>").addClass("tweet");
         let $header = $("<header>").appendTo($tweet);
-            let $avatar = $("<img>").addClass("avatar").attr("src", tweet.user.avatars.small).appendTo($header);
-            let $name = $("<h2>").text(tweet.user.name).appendTo($header);
-            let $handle = $("<p>").addClass("handle").text(tweet.user.handle).appendTo($header);
+            let $headerLeft = $("<div>").addClass("header-left").appendTo($header);
+                let $avatar = $("<img>").addClass("avatar").attr("src", tweet.user.avatars.small).appendTo($headerLeft);
+                let $name = $("<p>").addClass("header-name").text(tweet.user.name).appendTo($headerLeft);
+            let $headerRight = $("<div>").addClass("header-right").appendTo($header);
+                let $handle = $("<p>").addClass("handle").text(tweet.user.handle).appendTo($headerRight);
         let $content = $("<p>").addClass("content").text(tweet.content.text).appendTo($tweet);
         let $footer = $("<footer>").appendTo($tweet);
             let $datePostedDiv = $("<div>").appendTo($footer);

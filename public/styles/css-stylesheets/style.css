@@ -15,15 +15,24 @@
 }
 
 .logo {
-  width: 80px;
-  height: 80px;
+  width: 3em;
+  height: 3em;
+}
+
+#nav-bar-header {
+  display: inline-flex;
+  align-items: center;
+}
+
+#nav-bar-buttons {
+  display: inline-flex;
+  align-items: center;
 }
 
 .header {
-  vertical-align: top;
-  line-height: 2;
   margin-left: 10px;
-  font-size: 40px;
+  margin-right: 10px;
+  font-size: 2.2em;
 }
 
 .compose-button {
@@ -80,10 +89,10 @@ body {
 }
 
 .container {
-  width: 450px;
+  width: 55vw;
   height: 100% 35px;
   margin: 80px auto;
-  padding: 25px;
+  padding: 15px;
   background-color: white;
 }
 
@@ -94,7 +103,7 @@ body {
 .new-tweet {
   display: inline-block;
   background-color: #ececec;
-  width: 400px;
+  width: 100%;
   height: 158px;
   border: solid 0.5px;
   margin: 0px auto;
@@ -167,53 +176,53 @@ body {
 .tweet {
   opacity: 0.4;
   background-color: #ececec;
-  width: 400px;
+  width: 100%;
   margin-bottom: 5px;
   overflow: hidden;
-  height: 210px;
   border: solid 1px;
   border-radius: 10px;
 }
 .tweet header {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: space-between;
   background-color: lightblue;
-  padding: 12px;
-  height: 45%;
+  padding: 0.5em;
   width: 100%;
 }
+.tweet header .header-right {
+  display: inline-flex;
+  align-items: center;
+}
+.tweet header .header-left {
+  display: inline-flex;
+  align-items: center;
+}
+.tweet header .header-left .header-name {
+  font-size: 1.5em;
+}
 .tweet header .avatar {
-  display: inline-block;
   height: 60px;
   width: 60px;
   border-radius: 5px;
-}
-.tweet header h2 {
-  display: inline-block;
-  position: relative;
-  bottom: 40px;
-  margin-left: 8px;
-}
-.tweet header .handle {
-  float: right;
-  margin: 0px;
+  margin-right: 0.5em;
 }
 .tweet .content {
   position: relative;
   background-color: white;
-  height: 35%;
+  min-height: 80px;
   width: 100%;
-  padding-top: 10px;
-  padding-left: 10px;
+  padding: 10px;
   margin: 0px;
+  overflow-wrap: break-word;
 }
 .tweet footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 20%;
+  padding: 0.1em 0.1em 0.1em 0.5em;
   width: 100%;
-  padding-left: 10px;
   border-top: solid 0.5px;
+  height: inherit;
 }
 .tweet footer div.icons {
   display: none;
@@ -225,8 +234,8 @@ body {
   top: 2px;
 }
 .tweet footer div.icons .fa-flag, .tweet footer div.icons .fa-thumbs-up, .tweet footer div.icons .fa-retweet {
-  padding-left: 6px;
-  padding-right: 6px;
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
 .tweet:hover {
