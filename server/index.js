@@ -140,7 +140,7 @@ MongoClient.connect(MongoURL, (err, db) => {
           if (error){
             console.log("Error: ", error);
           } else {
-            console.log("Response: ", response);
+            console.log("Logged in as: ", response.value.handle);
           }
         })
         req.session.user_id = newUUID;

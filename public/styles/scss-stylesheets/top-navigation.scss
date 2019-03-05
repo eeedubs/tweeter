@@ -46,7 +46,7 @@
 
 .signup-button, .login-button, .logout-button {
     display: inline-block;
-    width: 64px;
+    min-width: 6vw;
     font-size: 1em;
     background-color: #00a087;
     color: white;
@@ -65,8 +65,3 @@
 .compose-button:hover {
     border: 2px black solid;
 }
-
-
-/* .compose-button .logo { */
-    /* to fill out later */
-/* } */
